@@ -10,14 +10,8 @@ const cssDistFile = path.join(distFolder, 'style.css');
 
 async function createDir() {
   await fs
-    .access(distFolder)
-    .then(async () => {
-      const files = await fs.readdir(distFolder, { withFileTypes: true });
-      for (const f of files) {
-        await fs.rm(path.join(distFolder, f.name), { recursive: true });
-      }
-    })
-    .catch(async () => {
+    .rm(distFolder, { recursive: true, force: true })
+    .finally(async () => {
       await fs.mkdir(distFolder, { recursive: true });
     });
 }
