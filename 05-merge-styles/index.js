@@ -1,5 +1,6 @@
 const fs = require('fs').promises;
 const path = require('path');
+const { EOL } = require('os');
 
 async function getStyleFiles() {
   return (
@@ -20,7 +21,8 @@ async function getStyles() {
 
   for (const file of files) {
     styles.push(
-      await fs.readFile(path.join(__dirname, 'styles', file.name), 'utf-8'),
+      (await fs.readFile(path.join(__dirname, 'styles', file.name), 'utf-8')) +
+        EOL,
     );
   }
 
