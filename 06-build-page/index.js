@@ -1,5 +1,6 @@
 const fs = require('fs').promises;
 const path = require('path');
+const { EOL } = require('os');
 
 const htmlTemplateFile = path.join(__dirname, 'template.html');
 const htmlComponentsFolder = path.join(__dirname, 'components');
@@ -44,7 +45,9 @@ async function createStyleBundle() {
   );
 
   for (const file of files) {
-    styles.push(await fs.readFile(path.join(stylesPath, file.name), 'utf-8'));
+    styles.push(
+      (await fs.readFile(path.join(stylesPath, file.name), 'utf-8')) + EOL,
+    );
   }
 
   await fs.writeFile(cssDistFile, styles, 'utf-8');
